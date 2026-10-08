@@ -1,0 +1,16 @@
+{
+  "short_name": "GymTrack",
+  "name": "GymTrack - Rutina, Repeticiones y Pesos",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./",
+  "background_color": "#09090b",
+  "theme_color": "#10b981",
+  "display": "standalone",
+  "orientation": "portrait"
+}
