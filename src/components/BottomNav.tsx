@@ -13,7 +13,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   activeWorkoutDay,
 }) => {
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-neutral-950/95 backdrop-blur-lg border-t border-neutral-800 px-1 py-1.5">
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[color:var(--color-neutral-950)]/95 backdrop-blur-lg border-t border-[color:var(--color-neutral-800)] px-1 py-1.5">
       <div className="grid grid-cols-5 gap-0.5">
         <button
           onClick={() => onTabChange('routines')}

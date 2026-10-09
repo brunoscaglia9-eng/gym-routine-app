@@ -32,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-neutral-950/80 backdrop-blur-md border-b border-neutral-800">
+    <header className="sticky top-0 z-40 bg-[color:var(--color-neutral-950)]/80 backdrop-blur-md border-b border-[color:var(--color-neutral-800)]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo and Brand */}
         <div
@@ -53,7 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Desktop Navigation Tabs */}
-        <nav className="hidden lg:flex items-center gap-1 bg-neutral-900/90 p-1 rounded-2xl border border-neutral-800">
+        <nav className="hidden lg:flex items-center gap-1 bg-[color:var(--color-neutral-900)]/90 p-1 rounded-2xl border border-[color:var(--color-neutral-800)]">
           <button
             onClick={() => onTabChange('routines')}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
@@ -127,7 +127,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Unit Toggle KG / LB */}
           <button
             onClick={toggleUnit}
-            className="px-2.5 py-1.5 bg-neutral-900 border border-neutral-800 hover:border-neutral-700 rounded-xl text-xs font-mono font-bold text-neutral-300 hover:text-neutral-100 transition-all"
+            className="px-2.5 py-1.5 bg-[color:var(--color-neutral-900)] border-[color:var(--color-neutral-800)] hover:border-[color:var(--color-neutral-700)] rounded-xl text-xs font-mono font-bold text-[color:var(--color-neutral-300)] hover:text-[color:var(--color-neutral-100)] transition-all"
             title="Cambiar unidad de peso (KG o LB)"
           >
             {settings.weightUnit.toUpperCase()}
@@ -145,7 +145,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Backup / Restore Modal Trigger */}
           <button
             onClick={onOpenBackup}
-            className="p-2 bg-neutral-900 border border-neutral-800 hover:border-neutral-700 text-neutral-400 hover:text-neutral-200 rounded-xl transition-all"
+            className="p-2 bg-[color:var(--color-neutral-900)] border-[color:var(--color-neutral-800)] hover:border-[color:var(--color-neutral-700)] text-[color:var(--color-neutral-400)] hover:text-[color:var(--color-neutral-200)] rounded-xl transition-all"
             title="Copia de seguridad y exportar datos"
           >
             <Database className="w-4 h-4" />

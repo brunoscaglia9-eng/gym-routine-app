@@ -7,7 +7,7 @@ import {
   Check,
 } from 'lucide-react';
 import type { User, AppSettings, ThemeType } from '../types';
-import { THEMES } from '../utils/theme';
+import { THEMES, applyTheme } from '../utils/theme';
 
 interface UserProfileModalProps {
   isOpen: boolean;
@@ -56,6 +56,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
   };
 
   const handleSelectTheme = (themeId: ThemeType) => {
+    applyTheme(themeId);
     onUpdateSettings({
       ...settings,
       theme: themeId,
