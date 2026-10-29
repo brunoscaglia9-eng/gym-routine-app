@@ -6,6 +6,7 @@ import {
   TrendingUp,
   Edit2,
   Trash2,
+  Sparkles,
 } from 'lucide-react';
 import type { Exercise, MuscleGroup } from '../types';
 
@@ -15,6 +16,7 @@ interface ExerciseLibraryProps {
   onEditExercise: (exercise: Exercise) => void;
   onDeleteExercise: (exerciseId: string) => void;
   onSelectExerciseProgress: (exercise: Exercise) => void;
+  onSyncDefaults?: () => void;
 }
 
 const MUSCLE_FILTER_OPTIONS: (MuscleGroup | 'Todos')[] = [
@@ -22,13 +24,14 @@ const MUSCLE_FILTER_OPTIONS: (MuscleGroup | 'Todos')[] = [
   'Pecho',
   'Espalda',
   'Piernas',
+  'Glúteos',
   'Hombros',
   'Bíceps',
   'Tríceps',
   'Abdomen / Core',
-  'Glúteos',
   'Antebrazos',
   'Cardio',
+  'Cuerpo Completo',
 ];
 
 export const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({
@@ -37,6 +40,7 @@ export const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({
   onEditExercise,
   onDeleteExercise,
   onSelectExerciseProgress,
+  onSyncDefaults,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMuscle, setSelectedMuscle] = useState<MuscleGroup | 'Todos'>('Todos');
@@ -61,19 +65,35 @@ export const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({
           <h1 className="text-xl sm:text-2xl font-extrabold text-neutral-100 flex items-center gap-2">
             <Dumbbell className="w-6 h-6 text-emerald-400" />
             Biblioteca de Ejercicios
+            <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
+              {exercises.length}
+            </span>
           </h1>
           <p className="text-xs text-neutral-400">
             Explora o añade ejercicios con imágenes, series y descansos personalizados
           </p>
         </div>
 
-        <button
-          onClick={onCreateExercise}
-          className="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs sm:text-sm rounded-xl flex items-center gap-2 shadow-lg shadow-emerald-500/20 active:scale-95 transition-all self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          Nuevo Ejercicio
-        </button>
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          {onSyncDefaults && (
+            <button
+              onClick={onSyncDefaults}
+              title="Restaurar o sincronizar ejercicios predeterminados faltantes"
+              className="px-3.5 py-2.5 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white font-semibold text-xs sm:text-sm rounded-xl flex items-center gap-1.5 border border-neutral-800 active:scale-95 transition-all"
+            >
+              <Sparkles className="w-4 h-4 text-emerald-400" />
+              <span>Sincronizar Catálogo</span>
+            </button>
+          )}
+
+          <button
+            onClick={onCreateExercise}
+            className="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs sm:text-sm rounded-xl flex items-center gap-2 shadow-lg shadow-emerald-500/20 active:scale-95 transition-all"
+          >
+            <Plus className="w-4 h-4" />
+            Nuevo Ejercicio
+          </button>
+        </div>
       </div>
 
       {/* Search and Filters */}

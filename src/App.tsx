@@ -98,6 +98,29 @@ export function App() {
         }
         loadedRoutines = DEFAULT_ROUTINES;
         loadedExercises = DEFAULT_EXERCISES;
+      } else {
+        // Automatically sync new default exercises into existing storage
+        const existingMap = new Map(loadedExercises.map((e) => [e.id, e]));
+        let hasNew = false;
+        const mergedExercises = [...loadedExercises];
+
+        for (const defaultEx of DEFAULT_EXERCISES) {
+          const existing = existingMap.get(defaultEx.id);
+          if (!existing) {
+            await saveExerciseDB(defaultEx);
+            mergedExercises.push(defaultEx);
+            hasNew = true;
+          } else if (!existing.imageUrl && defaultEx.imageUrl) {
+            const updated = { ...existing, imageUrl: defaultEx.imageUrl };
+            await saveExerciseDB(updated);
+            const idx = mergedExercises.findIndex((e) => e.id === defaultEx.id);
+            if (idx !== -1) mergedExercises[idx] = updated;
+            hasNew = true;
+          }
+        }
+        if (hasNew) {
+          loadedExercises = mergedExercises;
+        }
       }
 
       setRoutines(loadedRoutines);
@@ -266,6 +289,20 @@ export function App() {
     }
   };
 
+  const handleSyncDefaultExercises = async () => {
+    const existingIds = new Set(exercises.map((e) => e.id));
+    const toAdd = DEFAULT_EXERCISES.filter((e) => !existingIds.has(e.id));
+    if (toAdd.length === 0) {
+      alert('¡Tu biblioteca ya tiene todos los ejercicios predeterminados disponibles!');
+      return;
+    }
+    for (const ex of toAdd) {
+      await saveExerciseDB(ex);
+    }
+    setExercises((prev) => [...prev, ...toAdd]);
+    alert(`Se agregaron ${toAdd.length} nuevos ejercicios a tu biblioteca.`);
+  };
+
   // Workout Session Flow
   const handleStartWorkout = (day: WorkoutDay) => {
     setActiveWorkoutDay(day);
@@ -419,6 +456,7 @@ export function App() {
             onCreateExercise={() => handleOpenExerciseModal()}
             onEditExercise={handleOpenExerciseModal}
             onDeleteExercise={handleDeleteExercise}
+            onSyncDefaults={handleSyncDefaultExercises}
             onSelectExerciseProgress={(ex) => {
               setProgressExercise(ex);
               setIsProgressModalOpen(true);
